@@ -7,7 +7,9 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <object>MessagingSession</object>
+            <objects>
+                <object>MessagingSession</object>
+            </objects>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

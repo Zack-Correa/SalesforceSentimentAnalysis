@@ -29,6 +29,8 @@ public with sharing class SentimentService {
     }
 
    
+
+    //Isolar numa "PromptService"?
     private static ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generateOutput(Map<String, Object> inputValues, String applicationName, String templateAPIName){
         Map<String,ConnectApi.WrappedValue> valueMap = new Map<String,ConnectApi.WrappedValue>();
         ConnectApi.EinsteinPromptTemplateGenerationsInput promptGenerationInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();

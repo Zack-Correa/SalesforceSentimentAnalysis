@@ -1,6 +1,6 @@
 public with sharing class SentimentController {
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static String getSentiment(String message) {
-        return SentimentService.analyzeSentiment(message);
+        return JSON.serialize(SentimentService.analyzeSentiment(message));
     }
 }
