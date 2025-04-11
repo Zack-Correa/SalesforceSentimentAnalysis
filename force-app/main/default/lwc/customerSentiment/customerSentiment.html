@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Sentimento do Cliente" icon-name="utility:emoji">
+        <div class="slds-p-around_medium">
+            <div class="slds-m-bottom_small">
+                <span class="slds-badge" style={badgeStyle}>{sentiment}</span>
+            </div>
+            <template if:true={sentimentExplanation}>
+                <p>{sentimentExplanation}</p>
+            </template>
+            <lightning-button label="Analisar Sentimento" onclick={handleAnalyze} variant="brand"></lightning-button>
+        </div>
+    </lightning-card>
+</template>
