@@ -1,13 +1,31 @@
 <template>
     <lightning-card title="Sentiment Analysis" icon-name="custom:custom97">
         <div class="slds-p-around_medium">
-            <div class="slds-m-bottom_small">
-                <span class="slds-badge" style={badgeStyle}>{sentiment}</span>
-            </div>
+            <template if:true={sentiment}>
+                <div class="slds-m-bottom_small">
+                    <span class="slds-badge" style={badgeStyle}>{sentiment}</span>
+                </div>
+            </template>
             <template if:true={sentimentExplanation}>
                 <p>{sentimentExplanation}</p>
             </template>
-            <lightning-button label="Analisar Sentimento" onclick={handleAnalyze} variant="brand"></lightning-button>
+            <template if:true={calculatingSentiment}>
+                <lightning-dynamic-icon
+                    type="eq"
+                    option="play"
+                    alternative-text="Sentiment analysis in progress">
+                </lightning-dynamic-icon>
+            </template>
         </div>
+        <template if:true={sentimentAnalysisButtonEnabled}>
+            <lightning-button
+            variant="neutral"
+            label="Analyze Sentiment"
+            onclick={calculateConversationSentiment}
+            class="slds-m-around_medium">
+        </lightning-button>
+        </template>
     </lightning-card>
+    <lightning-conversation-toolkit-api lwc:ref="lwcToolKitApi">
+    </lightning-conversation-toolkit-api>
 </template>
