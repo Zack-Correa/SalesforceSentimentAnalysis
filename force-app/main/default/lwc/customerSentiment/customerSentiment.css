@@ -1,2 +1,29 @@
 :host {
 }
+
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.sentiment-explanation{
+    font-size: larger;
+}
+
+.sentiment-container{
+    display: flex;
+    align-items: center;
+}
+
+.loading-icon{
+    margin-left: 1%;
+}
+
+.sentiment-explanation-container{
+    position:relative;
+}
+
+.component-disabled {
+    font-weight: bold;
+}
