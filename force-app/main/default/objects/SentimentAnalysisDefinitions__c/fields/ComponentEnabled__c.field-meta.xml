@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ComponentEnabled__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Sets if the component is visible.</description>
+    <label>Component enabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
