@@ -15,7 +15,7 @@ export default class CustomerSentiment extends LightningElement {
     receiveingSubscription = null;
     conversationEndedSubscription = null;
 
-    isSentimentEnabled;
+    isSentimentEnabled = true;
     calculationMode;
 
 
