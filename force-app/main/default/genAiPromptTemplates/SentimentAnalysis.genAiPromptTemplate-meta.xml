@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>mxmUo5joQn9W9v/PYLVthXx8WtMJ4lspNDSFx5NAMXo=_1</activeVersionIdentifier>
+    <description>This prompt is used to analyze and classify the sentiment of the user messages in chat.</description>
+    <developerName>SentimentAnalysis</developerName>
+    <masterLabel>Sentiment Analysis</masterLabel>
+    <templateVersions>
+        <content>Your task is to evaluate the messages exchanged between agents and users on an omnichannel platform and, based on the content of these messages, identify and classify the expressed sentiment. For each set of messages provided, please follow the steps below:
+Conversation Context:
+Analyze the overall content of the messages, taking into account the full context of the interaction.
+Pay attention to both the agents&apos; responses and the users&apos; messages, but prioritize the users’ intentions and tone.
+Identifying Sentiments:
+Classify each interaction (or set of messages) into one of the following categories: Positive, Negative, or Neutral.
+Consider the presence of emotional expressions, satisfaction or dissatisfaction, and language that indicates enthusiasm, frustration, or indifference.
+Analysis Criteria:
+Language and Tone: Observe expressions that demonstrate happiness, compliments, or satisfaction to classify as &apos;Positive&apos;; expressions that indicate complaints, dissatisfaction, or strong criticism to classify as &apos;Negative&apos;; and communications without a marked emotional tone as &apos;Neutral&apos;.
+Context and Intensity: Consider the intensity of the words used and the sequence of interactions, as these may influence the overall sentiment perception.
+Ambiguity and Mixed Emotions: In cases of ambiguity or mixed sentiment, opt for a &apos;Neutral&apos; classification or determine the predominant sentiment based on the main context.
+Response Format:
+For each analysis, provide a concise summary indicating the sentiment classification (Positive, Negative, or Neutral) in JSON format.
+Example Output:
+{
+ &quot;sentiment&quot;: &quot;[Positive|Negative|Neutral]&quot;,
+ &quot;explanation&quot;: &quot;A brief explanation for the sentiment classification.&quot;
+}
+Here is the conversation:
+{!$Input:FreeText}
+
+</content>
+        <generationTemplateConfigs>
+            <generationConfigDeveloperName>einstein_gpt__enUsLanguageStyle</generationConfigDeveloperName>
+        </generationTemplateConfigs>
+        <inputs>
+            <apiName>FreeText</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>Free Text</masterLabel>
+            <referenceName>Input:FreeText</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>mxmUo5joQn9W9v/PYLVthXx8WtMJ4lspNDSFx5NAMXo=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
