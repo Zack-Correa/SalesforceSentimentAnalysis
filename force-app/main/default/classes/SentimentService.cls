@@ -1,9 +1,5 @@
-
-//EinsteinSentimentService : EinsteinPromptService
-//iSentimentService - analyzeSentiment
-
 public with sharing class SentimentService {
-    
+    public class NoGenerationResponseException extends Exception {} 
     public class SentimentResponse {
         public String sentiment;
         public String explanation;
@@ -11,6 +7,10 @@ public with sharing class SentimentService {
     
 
     public static SentimentResponse analyzeSentiment(String messages) {
+        Map<String,ConnectApi.WrappedValue> valueMap = new Map<String,ConnectApi.WrappedValue>();
+        ConnectApi.EinsteinPromptTemplateGenerationsInput promptGenerationInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
+        promptGenerationInput.isPreview = false;
+
         Map<String, Object> inputValues = new Map<String, Object>();
         inputValues.put('Input:FreeText', messages);
 
@@ -18,20 +18,33 @@ public with sharing class SentimentService {
         
         if(generationOutput.generations == null || generationOutput.generations.isEmpty()) {
             System.debug('No generations found in the response.');
-            throw new CustomException();
+            throw new NoGenerationResponseException('No generation was found in the response.');
         }
-        
-        System.debug('Full response: ' + JSON.serialize(generationOutput.generations));
-        System.debug('Response: ' + JSON.serialize(generationOutput.generations[0].text));
 
         return (SentimentResponse)JSON.deserialize(generationOutput.generations[0].text, SentimentResponse.class);
 
     }
 
    
+    private static ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generateOutput(Map<String, Object> inputValues, String applicationName, String templateAPIName){
+        Map<String,ConnectApi.WrappedValue> valueMap = new Map<String,ConnectApi.WrappedValue>();
+        ConnectApi.EinsteinPromptTemplateGenerationsInput promptGenerationInput = new ConnectApi.EinsteinPromptTemplateGenerationsInput();
+        promptGenerationInput.isPreview = false;
 
-    //Isolar numa "EinsteinPromptService"?
-    //Implementar na base com construtor
-    
+        for(String inputName : inputValues.keySet()){    
+            ConnectApi.WrappedValue wrappedInput = new ConnectApi.WrappedValue();
+            wrappedInput.value = inputValues.get(inputName);
+
+            valueMap.put(inputName, wrappedInput);
+        }
+        promptGenerationInput.inputParams = valueMap;
+
+        promptGenerationInput.additionalConfig = new ConnectApi.EinsteinLlmAdditionalConfigInput();
+        promptGenerationInput.additionalConfig.applicationName = applicationName;
+
+        ConnectApi.EinsteinPromptTemplateGenerationsRepresentation generationOutput = ConnectApi.EinsteinLLM.generateMessagesForPromptTemplate(templateAPIName, promptGenerationInput);
+
+        return generationOutput;
+    }
 
 }

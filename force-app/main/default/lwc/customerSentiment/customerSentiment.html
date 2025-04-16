@@ -1,31 +1,51 @@
 <template>
-    <lightning-card title="Sentiment Analysis" icon-name="custom:custom97">
-        <div class="slds-p-around_medium">
-            <template if:true={sentiment}>
-                <div class="slds-m-bottom_small">
-                    <span class="slds-badge" style={badgeStyle}>{sentiment}</span>
+    <template lwc:if={isSentimentEnabled}>
+        <lightning-card variant="narrow" title="Sentiment Analysis" icon-name="custom:custom97">
+            <div class="slds-p-around_medium">
+                <div class="sentiment-container">
+                    <template lwc:if={sentiment}>
+                        <div class="slds-m-bottom_big">
+                            <lightning-badge label={sentiment} class={badgeStyle}></lightning-badge>
+                        </div>
+                    </template>
+                    <template lwc:if={calculatingSentiment}>
+                        <lightning-dynamic-icon
+                            type="eq"
+                            option="play"
+                            alternative-text="Sentiment analysis in progress"
+                            class="loading-icon">
+                        </lightning-dynamic-icon>
+                    </template>
                 </div>
-            </template>
-            <template if:true={sentimentExplanation}>
-                <p>{sentimentExplanation}</p>
-            </template>
-            <template if:true={calculatingSentiment}>
-                <lightning-dynamic-icon
-                    type="eq"
-                    option="play"
-                    alternative-text="Sentiment analysis in progress">
-                </lightning-dynamic-icon>
-            </template>
+                <div class="sentiment-explanation-container">
+                    <template lwc:if={sentimentExplanation}>
+                        <template lwc:if={calculatingSentiment}>
+                            <lightning-spinner alternative-text="Sentiment analysis in progress." variant="base" size="small">
+                            </lightning-spinner>
+                        </template>
+                        <template lwc:else>
+                            <p class="sentiment-explanation">{sentimentExplanation}</p>
+                        </template>
+                    </template>
+                </div>
         </div>
-        <template if:true={sentimentAnalysisButtonEnabled}>
+        <template lwc:if={sentimentAnalysisButtonEnabled}>
             <lightning-button
-            variant="neutral"
-            label="Analyze Sentiment"
-            onclick={calculateConversationSentiment}
-            class="slds-m-around_medium">
-        </lightning-button>
+                variant="neutral"
+                label="Analyze Sentiment"
+                onclick={calculateConversationSentiment}
+                class="slds-m-around_medium"
+                slot="actions">
+            </lightning-button>
         </template>
-    </lightning-card>
-    <lightning-conversation-toolkit-api lwc:ref="lwcToolKitApi">
-    </lightning-conversation-toolkit-api>
+        </lightning-card>
+        <lightning-conversation-toolkit-api lwc:ref="lwcToolKitApi">
+        </lightning-conversation-toolkit-api>
+    </template>
+    <template lwc:else>
+        <lightning-card variant="narrow" title="Sentiment Analysis" icon-name="custom:custom97">
+            <div class="slds-p-around_medium">
+                <p class="component-disabled">Sentiment analysis is not enabled for this conversation.</p>
+            </div>
+        </lightning-card>
 </template>
